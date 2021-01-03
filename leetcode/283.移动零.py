@@ -10,12 +10,12 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        n = len(nums)
-        y = 0 
+        n=len(nums)
+        y=0
         for i in range(n):
             if nums[i]!=0:
                 nums[y],nums[i]=nums[i],nums[y]
                 y+=1
-
+                
 # @lc code=end
 
