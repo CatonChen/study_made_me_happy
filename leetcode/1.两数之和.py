@@ -8,9 +8,13 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         hashmap=dict()
-        for i , v in enumerate(nums):
-            if hashmap.get(target - v) is not None:
-                return [hashmap.get(target - v),i]
-            hashmap[v]=i
+        res=[]
+        for i, val in enumerate(nums):
+            if hashmap.get(target - val) is not None:
+                res.append(hashmap.get(target - val))
+                res.append(i)
+            hashmap[val]=i
+        return res
+
 # @lc code=end
 
