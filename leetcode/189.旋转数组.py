@@ -10,16 +10,10 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        n = len(nums)
-        k = k%n
-        def swap(i,j):
-            while (i<j):
-                nums[i],nums[j] = nums[j],nums[i]
-                i+=1
-                j-=1
-        swap(0,n-k-1)
-        swap(n-k,n-1)
-        swap(0,n-1)
+        n=len(nums)
+        k=k%n
+        nums[:] = nums[n-k:]+nums[:n-k]
+
 
 # @lc code=end
 

@@ -10,11 +10,11 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        none_zero=0
+        num_zero=0
         for i in range(len(nums)):
             if nums[i]!=0:
-                nums[none_zero],nums[i]=nums[i],nums[none_zero]
-                none_zero+=1
+                nums[num_zero],nums[i]=nums[i],nums[num_zero]
+                num_zero+=1
                 
 # @lc code=end
 
