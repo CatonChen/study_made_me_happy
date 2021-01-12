@@ -12,31 +12,20 @@
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-        # #递归
-        # if l1 is None:      #l1为空返回l2
-        #     return l2
-        # elif l2 is None:    #l2为空返回l1
-        #     return l1     
-        # elif l1.val < l2.val:   #判断l1或l2的大小，递归至其中一个完结
-        #     l1.next = self.mergeTwoLists(l1.next,l2)
-        #     return l1
-        # else:
-        #     l2.next = self.mergeTwoLists(l1,l2.next)
-        #     return l2 
-
-        #迭代
-        prehead = ListNode(0)   #空列表
-        prev=prehead
-        while l1 and l2 :   #l1和l2不为空时
-            if l1.val < l2.val: #l1<l2,prev.next指向l1当前值，l1指针后移一位
-                prev.next=l1    
+        
+        prehead=ListNode(0) 
+        prev=prehead    #哨兵节点
+        while l1 and l2:    #l1和l2都存在时
+            if l1.val<l2.val:
+                prev.next=l1    #prev指向l1,l1移动一步
                 l1=l1.next
-            else:               #反之亦然
+            else:
                 prev.next=l2
                 l2=l2.next
-            prev=prev.next      #prev指针后移一位
+            prev=prev.next
+        #当其中一方没有后，链接剩余一方
+        prev.next = l1 if l1 is not None else l2
 
-        prev.next=l1 if l1 is not None else l2  #prev指针指向剩余的l1或l2
-        return prehead.next 
+        return prehead.next
 # @lc code=end
 

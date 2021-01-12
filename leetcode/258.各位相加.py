@@ -7,11 +7,9 @@
 # @lc code=start
 class Solution:
     def addDigits(self, num: int) -> int:
-        while num >=10:
-            digits = list(map(int,str(num)))
-            num=0
-            for i in range(len(digits)):
-                num+=digits[i]
-        return num
+        if (num%9==0) and (num!=0):
+            return 9
+        else:
+            return num%9
 # @lc code=end
 
