@@ -12,12 +12,20 @@
 #         self.next = next
 class Solution:
     def swapPairs(self, head: ListNode) -> ListNode:
-        pre,pre.next = self,head
-        while pre.next and pre.next.next:
-            a = pre.next
-            b = a.next
-            pre.next , a.next , b.next = b, b.next , a 
-            pre=a 
-        return self.next
+
+        #迭代
+        dummyhead=ListNode(0)
+        dummyhead.next=head
+        temp=dummyhead
+        while temp.next and temp.next.next:
+            #初始node1 node2
+            node1 , node2 = temp.next, temp.next.next
+            #两两交换节点
+            temp.next = node2   
+            node1.next = node2.next
+            node2.next = node1
+            temp = node1
+        return dummyhead.next
+
 # @lc code=end
 

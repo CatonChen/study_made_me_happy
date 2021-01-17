@@ -9,11 +9,11 @@ class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         hashmap=dict()
         res=[]
-        for i, val in enumerate(nums):
-            if hashmap.get(target - val) is not None:
-                res.append(hashmap.get(target - val))
+        for i ,v in enumerate(nums):
+            if hashmap.get((target - v)) is not None:
+                res.append(hashmap.get(target - v))
                 res.append(i)
-            hashmap[val]=i
+            hashmap[v]=i
         return res
 
 # @lc code=end

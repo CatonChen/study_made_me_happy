@@ -8,10 +8,10 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         from collections import defaultdict
-        mp = defaultdict(list)
+        mp=defaultdict(list)
         for st in strs:
             key = "".join(sorted(st))
-            mp[key].append(st) 
+            mp[key].append(st)
         return list(mp.values())
     
 # @lc code=end
