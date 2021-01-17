@@ -14,12 +14,17 @@
 # @lc code=start
 class Solution:
     def climbStairs(self, n: int) -> int:
-        if n==1 or n==2 : return n
-        a,b,c=1,2,0
+        #处理n<=2时
+        if n ==1 or n ==2:
+            return n
+        #初始化变量
+        a , b , tmp = 1, 2 ,0
         for i in range(3,n+1):
-            c=a+b
+            tmp=a+b #f(n) = f(n-1) + f(n-2)
             a=b
-            b=c
-        return c
+            b=tmp
+        return tmp
+
+
 # @lc code=end
 
