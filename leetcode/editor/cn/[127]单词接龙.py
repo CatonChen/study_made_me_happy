@@ -48,31 +48,43 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        from collections import deque
-        # wordList用set处理
+        # 初始化
         st = set(wordList)
-        # 处理特例
+        # 特例
         if endWord not in st:
             return 0
-        # 建立队列进行bfs
-        queue = deque()
-        queue.append([beginWord,1])
-        visted = set()
-        visted.add(beginWord)
-        m=len(beginWord)
-        while queue:
-            cur, step = queue.popleft()
-            # 当当前单词和目标单词一致时，返回
-            if cur == endWord:
-                return step
-            # 当当前单词和目标单词不一致时，搜索wordlist中的可以匹配的单词
-            for i in range(m):
-                for j in range(26):
-                    tmp = cur[:i] + chr(97 + j) + cur[i + 1:]
-                    if tmp in st and tmp not in visted:
-                        queue.append([tmp, step + 1])
-                        visted.add(tmp)
+
+        from collections import deque
+        # 初始化左右queue和vistied
+        lqueue = deque()
+        lqueue.append(beginWord)
+        rqueue = deque()
+        rqueue.append(endWord)
+
+        lvisited = set()
+        lvisited.add(beginWord)
+        rvisited = set()
+        rvisited.add(endWord)
+
+        step = 0
+
+        while lqueue and rqueue:
+            # 找出哪个队列较短，交换
+            if len(lqueue) > len(rqueue):
+                lqueue, lvisited, rqueue, rvisited = rqueue, rvisited, lqueue, lvisited
+            step += 1
+            # 遍历较短的队列
+            for k in range(len(lqueue)):
+                cur = lqueue.popleft()
+                if cur in rvisited:
+                    return step
+                else:
+                    for i in range(len(cur)):
+                        for j in range(26):
+                            tmp = cur[:i] + chr(97 + j) + cur[i + 1:]
+                            if tmp not in lvisited and tmp in st:
+                                lqueue.append(tmp)
+                                lvisited.add(tmp)
 
         return 0
-
 # leetcode submit region end(Prohibit modification and deletion)
