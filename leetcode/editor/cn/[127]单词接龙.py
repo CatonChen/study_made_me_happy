@@ -7,8 +7,8 @@
 #  转换过程中的中间单词必须是字典 wordList 中的单词。 
 #  
 # 
-#  给你两个单词 beginWord 和 endWord 和一个字典 wordList ，找到从 beginWord 到 endWord 的最短转换序列中的单
-# 词数目。如果不存在这样的转换序列，返回 0。 
+#  给你两个单词 beginWord 和 endWord 和一个字典 wordList ，找到从 beginWord 到 endWord 的 最短转换序列 中
+# 的 单词数目 。如果不存在这样的转换序列，返回 0。 
 #  
 # 
 #  示例 1： 
@@ -42,49 +42,33 @@
 #  wordList 中的所有字符串 互不相同 
 #  
 #  Related Topics 广度优先搜索 
-#  👍 682 👎 0
+#  👍 688 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        from collections import deque
         # 初始化
         st = set(wordList)
-        # 特例
+
         if endWord not in st:
             return 0
 
-        from collections import deque
-        # 初始化左右queue和vistied
-        lqueue = deque()
-        lqueue.append(beginWord)
-        rqueue = deque()
-        rqueue.append(endWord)
+        queue = deque()
+        queue.append((beginWord, 1))
+        visited = set(beginWord)
 
-        lvisited = set()
-        lvisited.add(beginWord)
-        rvisited = set()
-        rvisited.add(endWord)
-
-        step = 0
-
-        while lqueue and rqueue:
-            # 找出哪个队列较短，交换
-            if len(lqueue) > len(rqueue):
-                lqueue, lvisited, rqueue, rvisited = rqueue, rvisited, lqueue, lvisited
-            step += 1
-            # 遍历较短的队列
-            for k in range(len(lqueue)):
-                cur = lqueue.popleft()
-                if cur in rvisited:
-                    return step
-                else:
-                    for i in range(len(cur)):
-                        for j in range(26):
-                            tmp = cur[:i] + chr(97 + j) + cur[i + 1:]
-                            if tmp not in lvisited and tmp in st:
-                                lqueue.append(tmp)
-                                lvisited.add(tmp)
-
+        while queue:
+            cur, step = queue.popleft()
+            if cur == endWord:
+                return step
+            for i in range(len(cur)):
+                for j in 'abcdefghijklmnopqrstuvwxyz':
+                    tmp = cur[:i] + j + cur[i + 1:]
+                    if tmp in st and tmp not in visited:
+                        queue.append((tmp, step + 1))
+                        visited.add(tmp)
         return 0
+
 # leetcode submit region end(Prohibit modification and deletion)

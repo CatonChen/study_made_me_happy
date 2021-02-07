@@ -19,13 +19,12 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def isPerfectSquare(self, num: int) -> bool:
-        # 特例
         if num < 2:
             return True
+
         # 牛顿迭代法
         x = num // 2
         while x * x > num:
-            # x = (x + num // x) // 2
-            x = int(1 / 2 * (x + num // x))
+            x = (x + num // x) // 2
         return x * x == num
 # leetcode submit region end(Prohibit modification and deletion)

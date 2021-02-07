@@ -37,32 +37,31 @@
 #  -10^4 <= target <= 10^4 
 #  
 #  Related Topics 数组 二分查找 
-#  👍 1145 👎 0
+#  👍 1169 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        if not nums:
-            return -1
-        # 初始化
         n = len(nums)
         left, right = 0, n - 1
-        # 二分查找
-        while left <= right:
+        while left < right:
             mid = (left + right) // 2
-            # print(left, right, mid)
             if nums[mid] == target:
                 return mid
-            if nums[0] <= nums[mid]:
-                if nums[0] <= target < nums[mid]:
-                    right = mid - 1
-                else:
-                    left = mid + 1
-            else:
-                if nums[mid] < target <= nums[n - 1]:
+            elif nums[mid] < nums[right]:  # mid~right是升序
+                if nums[mid] < target <= nums[right]:
                     left = mid + 1
                 else:
                     right = mid - 1
-        return -1
+            else:  # left~mid是升序
+                if nums[left] <= target < nums[mid]:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+        if nums[left] == target:
+            return left
+        else:
+            return -1
+
 # leetcode submit region end(Prohibit modification and deletion)

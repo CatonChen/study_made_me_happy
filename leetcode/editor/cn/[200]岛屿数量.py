@@ -46,33 +46,29 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
+    def dfs(self, grid, i, j):
+        # 超出grid边界，或当前坐标不为1时，终止
+        if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] != '1':
+            return
+        grid[i][j] = '0'  # 将当前坐标置为0，且将其周围坐标也置为0
+        self.dfs(grid, i, j + 1)
+        self.dfs(grid, i, j - 1)
+        self.dfs(grid, i - 1, j)
+        self.dfs(grid, i + 1, j)
+
     def numIslands(self, grid: List[List[str]]) -> int:
-        # 处理gird为空时的特例
-        if not grid:
+        if grid is None:
             return 0
 
-        # grid的x,y轴
         m = len(grid)
         n = len(grid[0])
         count = 0
-        # 遍历grid
+        # 双指针遍历grid
         for i in range(m):
             for j in range(n):
                 if grid[i][j] == '1':
-                    self.dfs(grid, i, j)
+                    self.dfs(grid, i, j)  # 递归工作
                     count += 1
 
         return count
-
-    def dfs(self, grid, i, j):
-        # 终止条件
-        if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] != '1':
-            return
-        # 递归工作
-        grid[i][j] = '0'
-        self.dfs(grid, i, j + 1)
-        self.dfs(grid, i, j - 1)
-        self.dfs(grid, i + 1, j)
-        self.dfs(grid, i - 1, j)
-
 # leetcode submit region end(Prohibit modification and deletion)

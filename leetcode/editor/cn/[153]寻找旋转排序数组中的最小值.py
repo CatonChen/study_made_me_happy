@@ -36,26 +36,28 @@
 #  nums 原来是一个升序排序的数组，但在预先未知的某个点上进行了旋转 
 #  
 #  Related Topics 数组 二分查找 
-#  👍 331 👎 0
+#  👍 341 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def findMin(self, nums: List[int]) -> int:
-        if len(nums) == 1:
+        if len(nums) == 1:  # 特例1
             return nums[0]
         left, right = 0, len(nums) - 1
-        if nums[right] > nums[left]:
+        if nums[right] > nums[left]:  # 特例2，是个生序数组
             return nums[0]
+        # 二分查找
         while left < right:
             mid = (left + right) // 2
-            print(nums[left], nums[mid], nums[right])
+            # print (left,right,mid)
             if nums[mid] > nums[mid + 1]:
                 return nums[mid + 1]
-            elif nums[mid - 1] > nums[mid]:
+            if nums[mid - 1] > nums[mid]:
                 return nums[mid]
-            elif nums[mid] > nums[0]:
+            if nums[left] < nums[mid]:
                 left = mid + 1
             else:
                 right = mid - 1
+
 # leetcode submit region end(Prohibit modification and deletion)

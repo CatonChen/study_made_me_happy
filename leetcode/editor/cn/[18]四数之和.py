@@ -22,43 +22,41 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
-    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-        n = len(nums)
+    def nSum(self, nums, n, target):
+        if len(nums) < n:
+            return []
+
         res = []
-        nums.sort()
-        if not nums or n < 4:
+        # 分解到n为2时，求2数之和等于目标
+        if n == 2:
+            i, j = 0, len(nums) - 1
+            while i < j:
+                s = nums[i] + nums[j]
+                if s == target:
+                    res.append([nums[i], nums[j]])
+                    while i < j and nums[i] == nums[i + 1]:
+                        i += 1
+                    while i < j and nums[j] == nums[j - 1]:
+                        j -= 1
+                    i += 1
+                    j -= 1
+                elif s < target:
+                    i += 1
+                else:
+                    j -= 1
+            return res
+        else:  # 否则继续分解
+            for i in range(len(nums)):
+                if i > 0 and nums[i] == nums[i - 1]:
+                    continue
+                subres = self.nSum(nums[i + 1:], n - 1, target - nums[i])
+                for j in range(len(subres)):
+                    res.append([nums[i]] + subres[j])
             return res
 
-        for p in range(n - 3):
-            if p > 0 and nums[p] == nums[p - 1]:
-                continue
-            if nums[p] + nums[p + 1] + nums[p + 2] + nums[p + 3] > target:
-                break
-            if nums[p] + nums[n - 1] + nums[n - 2] + nums[n - 3] < target:
-                continue
-            # k = p + 1
-            for k in range(p + 1, n - 2):
-                if k > p + 1 and nums[k] == nums[k - 1]:
-                    continue
-                if nums[p] + nums[k] + nums[k + 1] + nums[k + 2] > target:
-                    break
-                if nums[p] + nums[k] + nums[n - 1] + nums[n - 2] < target:
-                    continue
-                i, j = k + 1, n - 1
-                while i < j:
-                    s = nums[p] + nums[k] + nums[i] + nums[j]
-                    if s == target:
-                        res.append([nums[p], nums[k], nums[i], nums[j]])
-                        while i < j and nums[i] == nums[i + 1]:  # 条件与三数之和不同
-                            i += 1
-                        i += 1
-                        while i < j and nums[j] == nums[j - 1]:  # 条件与三数之和不同
-                            j -= 1
-                        j -= 1
-                    elif s > target:
-                        j -= 1
-                    else:
-                        i += 1
-        return res
-
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        if len(nums) < 4:
+            return []
+        nums.sort()
+        return self.nSum(nums, 4, target)
 # leetcode submit region end(Prohibit modification and deletion)

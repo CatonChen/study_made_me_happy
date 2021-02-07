@@ -36,24 +36,24 @@
 #  1 <= g[i], s[j] <= 231 - 1 
 #  
 #  Related Topics 贪心算法 
-#  👍 295 👎 0
+#  👍 299 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def findContentChildren(self, g: List[int], s: List[int]) -> int:
-        # 排序 g , s
+        # 排序
         g.sort()
         s.sort()
-        res = 0
-        i, j = 0, 0
-        while i < len(g) and j < len(s):
-            if s[j] >= g[i]:  # 满足条件 res+1，移动s,g的下标
+        i = j = res = 0
+
+        while i < len(s) and j < len(g):
+            if s[i] >= g[j]:
                 res += 1
                 i += 1
                 j += 1
             else:
-                j += 1  # 否则移动s下标
-        return res
+                i += 1
 
+        return res
 # leetcode submit region end(Prohibit modification and deletion)

@@ -44,11 +44,13 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        profit = 0
-        for i in range(1, len(prices)):
-            # i日卖出与i-1日买入的利润
-            tmp = prices[i] - prices[i - 1]
-            if tmp > 0:  # 利润>0，则计入总利润
-                profit += tmp
-        return profit
+        if not prices:
+            return 0
+        dp0, dp1 = 0, float('-inf')
+        for i in range(len(prices)):
+            dp0 = max(dp0, dp1 + prices[i])
+            # print(dp0,dp1)
+            dp1 = max(dp1, dp0 - prices[i])
+            # print(dp0,dp1)
+        return dp0
 # leetcode submit region end(Prohibit modification and deletion)
