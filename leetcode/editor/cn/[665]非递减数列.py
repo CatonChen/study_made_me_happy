@@ -41,5 +41,5 @@ class Solution:
                     nums[i - 1] = nums[i]
                 else:
                     nums[i] = nums[i - 1]
-        return count < 2
+        return count <= 1
 # leetcode submit region end(Prohibit modification and deletion)

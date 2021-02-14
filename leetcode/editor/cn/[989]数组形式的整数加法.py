@@ -52,5 +52,23 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def addToArrayForm(self, A: List[int], K: int) -> List[int]:
-        return list(str(int(''.join(map(str, A))) + K))
+        n = len(A)
+        res = []
+        # 逆序迭代，从低位到高位
+        for i in range(n - 1, -1, -1):
+            tmp = A[i] + K % 10
+            # K进位
+            K //= 10
+            # tmp>=10，K进位
+            if tmp >= 10:
+                K += 1
+            # 将tmp加入结果
+            res.append(tmp % 10)
+        # A遍历完后，如果仍然K>0
+        while K > 0:
+            res.append(K % 10)
+            K //= 10
+
+        # 逆序输出结果
+        return res[::-1]
 # leetcode submit region end(Prohibit modification and deletion)

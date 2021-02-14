@@ -51,20 +51,20 @@
 #  bills[i] 不是 5 就是 10 或是 20 
 #  
 #  Related Topics 贪心算法 
-#  👍 204 👎 0
+#  👍 210 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def lemonadeChange(self, bills: List[int]) -> bool:
-        five, ten = 0, 0
+        five = ten = 0
         for bill in bills:
             if bill == 5:
                 five += 1
             elif bill == 10:
                 if five > 0:
-                    five -= 1
                     ten += 1
+                    five -= 1
                 else:
                     return False
             else:

@@ -41,33 +41,33 @@
 #  grid[i][j] 的值为 '0' 或 '1' 
 #  
 #  Related Topics 深度优先搜索 广度优先搜索 并查集 
-#  👍 946 👎 0
+#  👍 971 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
+    # dfs
     def dfs(self, grid, i, j):
-        # 超出grid边界，或当前坐标不为1时，终止
+        # 终止条件
         if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] != '1':
             return
-        grid[i][j] = '0'  # 将当前坐标置为0，且将其周围坐标也置为0
-        self.dfs(grid, i, j + 1)
-        self.dfs(grid, i, j - 1)
+            # 当前处理
+        grid[i][j] = '0'
         self.dfs(grid, i - 1, j)
         self.dfs(grid, i + 1, j)
+        self.dfs(grid, i, j + 1)
+        self.dfs(grid, i, j - 1)
 
     def numIslands(self, grid: List[List[str]]) -> int:
-        if grid is None:
-            return 0
-
-        m = len(grid)
-        n = len(grid[0])
         count = 0
-        # 双指针遍历grid
-        for i in range(m):
-            for j in range(n):
+        # grid为空
+        if not grid:
+            return count
+        # 遍历grid
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
                 if grid[i][j] == '1':
-                    self.dfs(grid, i, j)  # 递归工作
+                    self.dfs(grid, i, j)
                     count += 1
 
         return count

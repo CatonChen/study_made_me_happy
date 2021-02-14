@@ -32,28 +32,33 @@
 #  -104 <= matrix[i][j], target <= 104 
 #  
 #  Related Topics 数组 二分查找 
-#  👍 303 👎 0
+#  👍 313 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         # 特例
-        if not matrix or not matrix[0]:
+        if not matrix:
+            return False
+        # 线性扫描
+        index = -1
+        for i in range(len(matrix)):
+            if target <= matrix[i][-1]:
+                index = i
+                break
+        if index == -1:
+            return False  # target不在矩阵里
+        else:  # 二分查找
+            left, right = 0, len(matrix[index]) - 1
+            while left <= right:
+                mid = (left + right) // 2
+                if matrix[index][mid] == target:
+                    return True
+                elif matrix[index][mid] > target:
+                    right = mid - 1
+                else:
+                    left = mid + 1
             return False
 
-        # 转为一维数组
-        nums = [i for row in matrix for i in row]
-
-        # 二分查找
-        left, right = 0, len(nums) - 1
-        while left <= right:
-            mid = (left + right) // 2
-            if nums[mid] == target:
-                return True
-            elif nums[mid] < target:
-                left = mid + 1
-            else:
-                right = mid - 1
-        return False
 # leetcode submit region end(Prohibit modification and deletion)

@@ -72,36 +72,32 @@
 #  答案保证小于 231 
 #  
 #  Related Topics 贪心算法 
-#  👍 121 👎 0
+#  👍 122 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def robotSim(self, commands: List[int], obstacles: List[List[int]]) -> int:
-        # 元组化障碍坐标
-        obstacleset = set(map(tuple, obstacles))
-
-        # 初始化坐标，方向和结果
+        # 障碍物坐标set
+        obstaclesset = set(map(tuple, obstacles))
+        # 初始化x,y,res
         x = y = res = 0
-        # 步数
+        # 初始化步数
         dx, dy = 0, 1
-
         # 模拟行走
         for cmd in commands:
-            # 左转
-            if cmd == -2:
+            if cmd == -2:  # 左转
                 dx, dy = -dy, dx
-            # 右转
-            elif cmd == -1:
+            elif cmd == -1:  # 右转
                 dx, dy = dy, -dx
-            elif cmd > 0:
+            else:
                 for i in range(cmd):
-                    # 遇到障碍物
-                    if (x + dx, y + dy) in obstacleset:
+                    if (x + dx, y + dy) in obstaclesset:
                         break
-                    else:  # 正常行走
+                    else:
                         x += dx
                         y += dy
                         res = max(res, x ** 2 + y ** 2)
+
         return res
 # leetcode submit region end(Prohibit modification and deletion)

@@ -38,11 +38,10 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def maximumProduct(self, nums: List[int]) -> int:
-        min1, min2 = float('inf'), float('inf')
-        max1, max2, max3 = float('-inf'), float('-inf'), float('-inf')
-        for num in nums:
-            min1, min2, _ = sorted([min1, min2, num])
-            _, max1, max2, max3 = sorted([max1, max2, max3, num])
-        return max(min1 * min2 * max3, max1 * max2 * max3)
+        # 排序
+        nums.sort()
+        a = nums[-3] * nums[-2] * nums[-1]
+        b = nums[0] * nums[1] * nums[-1]
+        return max(a, b)
 
 # leetcode submit region end(Prohibit modification and deletion)
