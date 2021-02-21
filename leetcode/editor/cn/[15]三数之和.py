@@ -35,45 +35,48 @@
 #  -105 <= nums[i] <= 105 
 #  
 #  Related Topics 数组 双指针 
-#  👍 2897 👎 0
+#  👍 2975 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        n = len(nums)
+    # 递归nSum
+    def nSum(self, nums, n, target):
         res = []
-        # order array
-        nums.sort()
-        # outer loop
-        for k in range(n - 2):
-            if nums[k] > 0:  # nums[k]>0, 意味没有解
-                break
-            # 如果k和k-1的元素相等，继续移动k
-            if k > 0 and nums[k] == nums[k - 1]:
-                k += 1
-                continue
-            i, j = k + 1, n - 1
-            # inner loop
+        # 递归终止条件
+        if len(nums) < n:
+            return res
+        # n=2
+        if n == 2:
+            i, j = 0, len(nums) - 1
             while i < j:
-                s = nums[k] + nums[i] + nums[j]
-                if s < 0:  # i太小，移动i
-                    i += 1
-                    while i < j and nums[i] == nums[i - 1]:
+                s = nums[i] + nums[j]
+                if s == target:
+                    res.append([nums[i], nums[j]])
+                    while i < j and nums[i] == nums[i + 1]:
                         i += 1
-                elif s > 0:  # j太大，移动j
-                    j -= 1
-                    while i < j and nums[j] == nums[j + 1]:
+                    while i < j and nums[j] == nums[j - 1]:
                         j -= 1
+                    i += 1
+                    j -= 1
+                elif s < target:
+                    i += 1
                 else:
-                    res.append([nums[k], nums[i], nums[j]])
-                    i += 1
                     j -= 1
-                    while i < j and nums[i] == nums[i - 1]:
-                        i += 1
-                    while i < j and nums[j] == nums[j + 1]:
-                        j -= 1
+            return res
+        # n<>2
+        else:
+            for k in range(len(nums)):
+                if k > 0 and nums[k] == nums[k - 1]:
+                    continue
+                else:
+                    subres = self.nSum(nums[k + 1:], n - 1, target - nums[k])
+                    for p in range(len(subres)):
+                        res.append([nums[k]] + subres[p])
+            return res
 
-        return res
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        return self.nSum(nums, 3, 0)
 
 # leetcode submit region end(Prohibit modification and deletion)

@@ -24,25 +24,25 @@
 #  1 <= n <= 8 
 #  
 #  Related Topics 字符串 回溯算法 
-#  👍 1522 👎 0
+#  👍 1566 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        # dfs 回溯
+        # 递归法
         def dfs(cur_str, left, right):
-            # 递归终止
             if left == n and right == n:
-                return res.append(cur_str)
-            # 处理逻辑与下钻
+                res.append(cur_str)
+                return
+                # 递归及剪枝
             if left < n:
                 dfs(cur_str + '(', left + 1, right)
             if left > right:
                 dfs(cur_str + ')', left, right + 1)
 
+        # 初始化及返回结果
         res = []
         dfs('', 0, 0)
         return res
-
 # leetcode submit region end(Prohibit modification and deletion)

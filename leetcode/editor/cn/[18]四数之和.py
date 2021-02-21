@@ -17,23 +17,24 @@
 # ]
 #  
 #  Related Topics 数组 哈希表 双指针 
-#  👍 728 👎 0
+#  👍 746 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
+    # 递归nSum
     def nSum(self, nums, n, target):
-        if len(nums) < n:
-            return []
-
         res = []
-        # 分解到n为2时，求2数之和等于目标
+        if len(nums) < n:
+            return res
+        # 当n==2时
         if n == 2:
             i, j = 0, len(nums) - 1
             while i < j:
                 s = nums[i] + nums[j]
                 if s == target:
                     res.append([nums[i], nums[j]])
+                    # 跳过重复元素
                     while i < j and nums[i] == nums[i + 1]:
                         i += 1
                     while i < j and nums[j] == nums[j - 1]:
@@ -45,18 +46,20 @@ class Solution:
                 else:
                     j -= 1
             return res
-        else:  # 否则继续分解
-            for i in range(len(nums)):
-                if i > 0 and nums[i] == nums[i - 1]:
+        else:  # n!=2时
+            for k in range(len(nums)):
+                if k > 0 and nums[k] == nums[k - 1]:
                     continue
-                subres = self.nSum(nums[i + 1:], n - 1, target - nums[i])
-                for j in range(len(subres)):
-                    res.append([nums[i]] + subres[j])
+                else:
+                    subres = self.nSum(nums[k + 1:], n - 1, target - nums[k])
+                    for j in range(len(subres)):
+                        res.append([nums[k]] + subres[j])
             return res
 
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-        if len(nums) < 4:
-            return []
+        # if len(nums) < 4:
+        #     return []
         nums.sort()
         return self.nSum(nums, 4, target)
+
 # leetcode submit region end(Prohibit modification and deletion)

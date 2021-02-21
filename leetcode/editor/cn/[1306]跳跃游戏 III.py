@@ -49,4 +49,26 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def canReach(self, arr: List[int], start: int) -> bool:
+        n = len(arr)
+        used = [0] * n
+
+        def dfs(pos):
+            # 递归终止条件
+            # pos下标已被使用
+            if used[pos] == 1:
+                return False
+            # pos下标未被使用，且arr[pos]=0
+            if used[pos] == 0 and arr[pos] == 0:
+                return True
+            # 标记pos已使用
+            used[pos] = 1
+            # 向左向右跳两种情况
+            left = right = False
+            if 0 <= pos + arr[pos] < n:
+                left = dfs(pos + arr[pos])
+            if 0 <= pos - arr[pos] < n:
+                right = dfs(pos - arr[pos])
+            return left or right
+
+        return dfs(start)
 # leetcode submit region end(Prohibit modification and deletion)

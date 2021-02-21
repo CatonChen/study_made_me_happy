@@ -42,33 +42,52 @@
 #  wordList 中的所有字符串 互不相同 
 #  
 #  Related Topics 广度优先搜索 
-#  👍 688 👎 0
+#  👍 697 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        from collections import deque
-        # 初始化
+        # wordlist——>set
         st = set(wordList)
-
+        # endword不在st中，返回0
         if endWord not in st:
             return 0
-
-        queue = deque()
-        queue.append((beginWord, 1))
-        visited = set(beginWord)
-
-        while queue:
-            cur, step = queue.popleft()
-            if cur == endWord:
-                return step
-            for i in range(len(cur)):
-                for j in 'abcdefghijklmnopqrstuvwxyz':
-                    tmp = cur[:i] + j + cur[i + 1:]
-                    if tmp in st and tmp not in visited:
-                        queue.append((tmp, step + 1))
-                        visited.add(tmp)
+        # 初始化队列queue和visited
+        from collections import deque
+        lqueue = deque()
+        lqueue.append(beginWord)
+        lvisited = set()
+        lvisited.add(beginWord)
+        rqueue = deque()
+        rqueue.append(endWord)
+        rvisited = set()
+        rvisited.add(endWord)
+        step = 0
+        # 遍历队列
+        while lqueue and rqueue:
+            # 找出元素少的队列
+            if len(lqueue) > len(rqueue):
+                lqueue, lvisited, rqueue, rvisited = rqueue, rvisited, lqueue, lvisited
+            # 次数+1
+            step += 1
+            # 对短队列处理每一个元素
+            for k in range(len(lqueue)):
+                cur = lqueue.popleft()
+                # 在rvisited找到目标单词，返回次数
+                if cur in rvisited:
+                    return step
+                # 没找到目标，继续处理
+                else:
+                    for i in range(len(cur)):
+                        # 单词字母替换
+                        for j in 'abcdefghijklmnopqrstuvwxyz':
+                            tmp = cur[:i] + j + cur[i + 1:]
+                            # tmp未被使用过，且在wordlist中
+                            if tmp in st and tmp not in lvisited:
+                                lqueue.append(tmp)
+                                lvisited.add(tmp)
+        # 没有可能解，返回0
         return 0
 
 # leetcode submit region end(Prohibit modification and deletion)

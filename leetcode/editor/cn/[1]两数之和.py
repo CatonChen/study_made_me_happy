@@ -45,9 +45,10 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        hashmap = dict()
+        hashmap = {}
         for i, v in enumerate(nums):
             if hashmap.get(target - v) is not None:
                 return [hashmap.get(target - v), i]
-            hashmap[v] = i
+            else:
+                hashmap[v] = i
 # leetcode submit region end(Prohibit modification and deletion)

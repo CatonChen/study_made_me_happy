@@ -25,20 +25,19 @@
 #  1 <= dominoes[i][j] <= 9 
 #  
 #  Related Topics 数组 
-#  👍 106 👎 0
+#  👍 118 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def numEquivDominoPairs(self, dominoes: List[List[int]]) -> int:
-        res = 0
         from collections import defaultdict
-        dt = defaultdict(int)
+        # 初始化
+        dicts = defaultdict(int)
+        # 遍历dominoes
         for i, j in dominoes:
             num = i * 10 + j if i < j else j * 10 + i
-            dt[num] += 1
-
-        for k in dt.values():
-            res += int(k * (k - 1) / 2)
-        return res
+            dicts[num] += 1
+        # 返回对数次数
+        return sum(n * (n - 1) // 2 for n in dicts.values())
 # leetcode submit region end(Prohibit modification and deletion)
