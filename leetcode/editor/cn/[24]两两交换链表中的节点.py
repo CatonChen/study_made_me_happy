@@ -49,4 +49,14 @@
 #         self.next = next
 class Solution:
     def swapPairs(self, head: ListNode) -> ListNode:
+        # 终止条件:head为空或仅有head一个节点
+        if not head or not head.next:
+            return head
+        # 新头指向原头next
+        newhead = head.next
+        # 原头next指向通过递归实现
+        head.next = self.swapPairs(newhead.next)
+        # 新头next指向原头，完成交换
+        newhead.next = head
+        return newhead
 # leetcode submit region end(Prohibit modification and deletion)

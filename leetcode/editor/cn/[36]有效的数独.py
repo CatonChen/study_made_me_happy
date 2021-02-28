@@ -56,33 +56,27 @@
 #  给定数独永远是 9x9 形式的。 
 #  
 #  Related Topics 哈希表 
-#  👍 468 👎 0
+#  👍 474 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        # 初始化
+        # 初始化哈希表
         row = [{} for _ in range(9)]
         col = [{} for _ in range(9)]
         box = [{} for _ in range(9)]
-
-        # 遍历数独矩阵
+        # 一次遍历9x9的矩阵
         for i in range(9):
             for j in range(9):
                 if board[i][j] != '.':
                     num = int(board[i][j])
-                    # print(num)
-                    # box下标
-                    box_idx = (i // 3) * 3 + j // 3
-                    # 记录num次数
+                    idx = (i // 3) * 3 + j // 3  # box下标
                     row[i][num] = row[i].get(num, 0) + 1
                     col[j][num] = col[j].get(num, 0) + 1
-                    box[box_idx][num] = box[box_idx].get(num, 0) + 1
-                    # print('row[i][num]:' + str(row[i][num]) + ' col[j][num]:' + str(
-                    #     col[j][num]) + ' box[box_idx][num]:' + str(box[box_idx][num]))
-                    # 判断有效性
-                    if row[i][num] > 1 or col[j][num] > 1 or box[box_idx][num] > 1:
+                    box[idx][num] = box[idx].get(num, 0) + 1
+                    # 判断重复数字
+                    if row[i][num] > 1 or col[j][num] > 1 or box[idx][num] > 1:
                         return False
         return True
 # leetcode submit region end(Prohibit modification and deletion)

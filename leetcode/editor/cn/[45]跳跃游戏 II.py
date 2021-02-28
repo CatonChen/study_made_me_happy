@@ -22,19 +22,17 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        n = len(nums)
-        #特例
-        if n == 1:
+        if len(nums) == 1:
             return 0
-        cur = nex = step = 0  # cur当前跳的最大范围，nex下一跳最远距离
-        for i, v in enumerate(nums):
-            # print(i,v,cur)
-            if i > cur:
-                cur = nex
-                # print(i,cur)
-                step += 1
-            nex = max(nex, i + v)
-            # print(nex)
-            if nex >= n - 1:
-                return step + 1
+        dp = [0] * len(nums)
+        k = 0
+        for i, n in enumerate(nums):
+            if i + n > k:
+                dp[k + 1:i + n + 1] = [dp[i] + 1] * (i + n - k)
+                # print(dp)
+                k = i + n
+                if i + n >= len(nums) - 1:
+                    break
+        # print(dp)
+        return dp[-1]
 # leetcode submit region end(Prohibit modification and deletion)

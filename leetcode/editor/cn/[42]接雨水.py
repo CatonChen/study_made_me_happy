@@ -35,31 +35,25 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def trap(self, height: List[int]) -> int:
-        # 没有高度，返回0
         if not height:
             return 0
-        n = len(height)
+        # 单调栈
+        stack = []
         res = 0
-        # 左右边界
-        maxleft = [0] * n  # 左边界数组
-        maxright = [0] * n  # 右边界数组
-        maxleft[0] = height[0]
-        maxright[n - 1] = height[n - 1]
-        # print(height)
-        # tmp = []
-        # 左边界数组最大值
-        for i in range(1, n):
-            maxleft[i] = max(height[i], maxleft[i - 1])
-        # print(maxleft)
-        # 右边界数组最大值
-        for i in range(n - 2, -1, -1):
-            maxright[i] = max(height[i], maxright[i + 1])
-        # print(maxright)
-        # 一次遍历数组，通过高度差得知雨水量
-        for i in range(n):
-            # tmp.append(min(maxleft[i], maxright[i]))
-            if min(maxleft[i], maxright[i]) > height[i]:
-                res += min(maxleft[i], maxright[i]) - height[i]
-        # print(tmp)
+        for i in range(len(height)-1):
+            # 栈不为空，且height[栈顶]<height[i]
+            while len(stack) > 0 and height[stack[-1]] < height[i]:
+                top = stack.pop()
+                if len(stack) == 0:
+                    break
+                # 高度
+                # print(height[stack[-1]],height[i],height[top])
+                h = min(height[stack[-1]], height[i]) - height[top]
+                # 宽度
+                w = i - stack[-1] - 1
+                # 雨水量
+                res += (w * h)
+            # i入栈
+            stack.append(i)
         return res
 # leetcode submit region end(Prohibit modification and deletion)
