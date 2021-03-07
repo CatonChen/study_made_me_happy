@@ -22,33 +22,14 @@
 # 3.  2 阶 + 1 阶
 #  
 #  Related Topics 动态规划 
-#  👍 1421 👎 0
+#  👍 1512 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def climbStairs(self, n: int) -> int:
-        #  当n==1或2时，返回n
-        if n == 1 or n == 2:
-            return n
-        # 初始化变量
-        a, b, tmp = 1, 2, 0
-        for i in range(3, n + 1):
-            # print(i)
-            tmp = a + b
-            a = b
-            b = tmp
-        # 返回结果
-        return tmp
-# leetcode submit region end(Prohibit modification and deletion)
-
-
-# leetcode submit region begin(Prohibit modification and deletion)
-# class Solution:
-#     @functools.lru_cache(100)
-#     def climbStairs(self, n: int) -> int:
-#         #递归
-#         if n==1 or n==2:
-#             return n
-#         return self.climbStairs(n-1)+self.climbStairs(n-2)
+        import math
+        sqrt5 = 5 ** 0.5
+        fib = math.pow((1 + sqrt5) / 2, n + 1) - math.pow((1 - sqrt5) / 2, n + 1)
+        return int(fib / sqrt5)
 # leetcode submit region end(Prohibit modification and deletion)

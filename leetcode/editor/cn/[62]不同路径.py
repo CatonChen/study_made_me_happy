@@ -52,10 +52,11 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        # n=j
-        f = [1] * n
+        # 初始化一维dp
+        dp = [1] * n
         for i in range(1, m):
             for j in range(1, n):
-                f[j] += f[j - 1]
-        return f[n - 1]
+                dp[j] = dp[j] + dp[j - 1]
+        # print(dp)
+        return dp[-1]
 # leetcode submit region end(Prohibit modification and deletion)

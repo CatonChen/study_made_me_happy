@@ -24,4 +24,17 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
+        n = len(nums)
+        if n <= 1:
+            return True
+        dp = [False] * n
+        dp[0] = True
+        for i in range(1, n):
+            for j in range(i):
+                # print(i, dp[j], j, j + nums[j])
+                if dp[j] and j + nums[j] >= i:
+                    dp[i] = True
+                    break
+        # print(dp)
+        return dp[-1]
 # leetcode submit region end(Prohibit modification and deletion)

@@ -57,31 +57,14 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        # 分治
-        n = len(nums)
-        # 递归终止条件
-        if n == 1:
-            return nums[0]
-        else:
-            # 递归左半部分
-            max_left = self.maxSubArray(nums[0:n // 2])
-            # 递归右半部分
-            max_right = self.maxSubArray(nums[n // 2:n])
-
-        # 计数中间部分
-        # 中间部分的左半部分
-        max_l = nums[n // 2 - 1]
+        # 贪心算法
+        res = float('-inf')  # 设定res初始为最小值
         tmp = 0
-        for i in range(n // 2 - 1, -1, -1):
-            tmp += nums[i]
-            max_l = max(max_l, tmp)
-        # 中间部分的右半部分
-        max_r = nums[n // 2]
-        tmp = 0
-        for i in range(n // 2, n):
-            tmp += nums[i]
-            max_r = max(max_r, tmp)
-
-        # 返回最终结果
-        return max(max_left, max_right, max_l + max_r)
+        for i in range(len(nums)):
+            tmp += nums[i]  # 当前子数组连续和
+            if tmp > res:
+                res = tmp  # tmp>res，则记录最大的tmp
+            if tmp < 0:  # 当前子数组连续和<0时，tmp重置为0
+                tmp = 0
+        return res
 # leetcode submit region end(Prohibit modification and deletion)

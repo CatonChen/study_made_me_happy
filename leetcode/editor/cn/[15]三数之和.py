@@ -35,18 +35,16 @@
 #  -105 <= nums[i] <= 105 
 #  
 #  Related Topics 数组 双指针 
-#  👍 2975 👎 0
+#  👍 3039 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
-    # 递归nSum
     def nSum(self, nums, n, target):
         res = []
-        # 递归终止条件
         if len(nums) < n:
             return res
-        # n=2
+        # n==2
         if n == 2:
             i, j = 0, len(nums) - 1
             while i < j:
@@ -64,8 +62,7 @@ class Solution:
                 else:
                     j -= 1
             return res
-        # n<>2
-        else:
+        else:  # n>2
             for k in range(len(nums)):
                 if k > 0 and nums[k] == nums[k - 1]:
                     continue
@@ -78,5 +75,4 @@ class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
         return self.nSum(nums, 3, 0)
-
 # leetcode submit region end(Prohibit modification and deletion)

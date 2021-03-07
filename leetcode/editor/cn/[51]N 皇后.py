@@ -34,36 +34,26 @@
 #  
 #  
 #  Related Topics 回溯算法 
-#  👍 748 👎 0
+#  👍 766 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        # 递归
-        def dfs(r):
-            if r == n:  # 递归终止条件
-                res.append([''.join(row) for row in b])
+        # 回溯
+        def dfs(queens, xy_diff, xy_sum):
+            p = len(queens)  # 算行数，行列相等
+            if p == n:
+                res.append(queens)
                 return
-            else:
-                for c in range(n):
-                    if isValid(r, c):
-                        b[r][c] = 'Q'
-                        dfs(r + 1)
-                        # 回溯
-                        b[r][c] = '.'
+            # 遍历每列
+            for q in range(n):
+                # 剪枝 ，逆向思维，能放Q的位置必须同时满足不在列、撇、捺里
+                if q not in queens and p - q not in xy_diff and p + q not in xy_sum:
+                    # 递归操作
+                    dfs(queens + [q], xy_diff + [p - q], xy_sum + [p + q])
 
-        # 剪枝
-        def isValid(r, c):
-            for i in range(r):
-                for j in range(n):  # 这里不是c，是n，表示每列都要检查
-                    if b[i][j] == 'Q' and (c == j or r + c == i + j or r - c == i - j):
-                        return False
-            return True
-
-        b = [['.'] * n for _ in range(n)]
         res = []
-        dfs(0)  # 从第一行开始，第一行下标为0
-        return res
-
+        dfs([], [], [])
+        return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in res]
 # leetcode submit region end(Prohibit modification and deletion)
