@@ -22,9 +22,10 @@
 #         self.next = next
 class Solution:
     def partition(self, head: ListNode, x: int) -> ListNode:
+        # 初始两个链表
         p = less = ListNode(0)
         q = more = ListNode(0)
-
+        # 遍历head
         while head:
             if head.val < x:
                 less.next = head
@@ -33,8 +34,12 @@ class Solution:
                 more.next = head
                 more = more.next
             head = head.next
-
+        # 拼接p和q
         more.next = None
+        # print(less)
+        # print(more)
+        # print(p)
+        # print(q)
         less.next = q.next
         return p.next
 # leetcode submit region end(Prohibit modification and deletion)

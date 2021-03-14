@@ -64,16 +64,9 @@ class Solution:
     def inorderTraversal(self, root: TreeNode) -> List[int]:
         # 初始化
         res = []
-        stack = []
-        cur = root
-        # 遍历栈或节点
-        while stack or cur:
-            # 当节点存在
-            while cur:
-                stack.append(cur)
-                cur = cur.left  # 找节点的左节点，直到没有左节点为止
-            cur = stack.pop()  # 出栈
-            res.append(cur.val)
-            cur = cur.right  # 找右节点
-        return res
+        if not root:
+            return res
+        # res.append(root.val)
+        # 中序：左-根-右
+        return self.inorderTraversal(root.left) + [root.val] + self.inorderTraversal(root.right)
 # leetcode submit region end(Prohibit modification and deletion)

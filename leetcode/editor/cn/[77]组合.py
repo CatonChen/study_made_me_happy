@@ -19,21 +19,25 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        # 定义dfs
-        def backtrace(cur, idx):
-            # 终止条件
-            if len(cur) == k:
-                res.append(cur[:])
+        # 回溯
+        def dfs(tmp, idx):
+            # 递归终止
+            if len(tmp) == k:
+                res.append(tmp[:])
                 return
-                # 逻辑处理与下钻
+                # 处理当前值
             for i in range(idx, n + 1):
-                cur.append(i)
-                backtrace(cur, i + 1)  # 下标+1
-                cur.pop()  # 回溯
+                tmp.append(i)
+                # print(['a']+tmp)
+                dfs(tmp, i + 1)
+                tmp.pop()  # 回溯
+                # print(['b']+tmp)
 
+        # 主逻辑
         res = []
         if k == 0:
             return res
-        backtrace([], 1)
+        dfs([], 1)
         return res
+
 # leetcode submit region end(Prohibit modification and deletion)

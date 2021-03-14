@@ -27,8 +27,10 @@
 #         self.right = right
 class Solution:
     def maxDepth(self, root: TreeNode) -> int:
+        # 没有节点时返回0
         if not root:
             return 0
+        # 递归左右子树
         left = self.maxDepth(root.left)
         right = self.maxDepth(root.right)
         return max(left, right) + 1

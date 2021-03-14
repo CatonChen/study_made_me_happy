@@ -16,7 +16,7 @@
 #     /  \
 #    15   7 
 #  Related Topics 树 深度优先搜索 数组 
-#  👍 847 👎 0
+#  👍 927 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -28,25 +28,16 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
-        def myBuildTree(pre_left, pre_right, in_left, in_right):
-            # 终止条件
-            if pre_left > pre_right:
-                return None
-            # 前序根下标
-            pre_root = preorder[pre_left]
-            # 中序根下标
-            in_root = index[pre_root]
-
-            root = TreeNode(pre_root)
-
-            len_left = in_root - in_left
-
-            root.left = myBuildTree(pre_left + 1, pre_left + len_left, in_left, in_root - 1)
-            root.right = myBuildTree(pre_left + len_left + 1, pre_right, in_root + 1, in_right)
-            return root
-
-        n = len(preorder)
-        index = {ele: i for i, ele in enumerate(inorder)}
-        return myBuildTree(0, n - 1, 0, n - 1)
-
+        # 递归终止：没有左右子树返回
+        if not preorder and not inorder:
+            return
+        # 构造根节点
+        root = TreeNode(preorder[0])
+        # 找出跟节点在中序中的位置
+        mid_idx = inorder.index(preorder[0])
+        # 递归自身构造左右子树
+        root.left = self.buildTree(preorder[1:mid_idx + 1], inorder[:mid_idx])
+        root.right = self.buildTree(preorder[mid_idx + 1:], inorder[mid_idx + 1:])
+        # 返回root
+        return root
 # leetcode submit region end(Prohibit modification and deletion)
