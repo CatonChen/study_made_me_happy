@@ -42,46 +42,47 @@
 #  wordList 中的所有字符串 互不相同 
 #  
 #  Related Topics 广度优先搜索 
-#  👍 713 👎 0
+#  👍 715 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         st = set(wordList)
+
         if endWord not in st:
             return 0
-        # 初始化双向bfs
-        from collections import deque
-        leftqueue = deque()
-        leftqueue.append(beginWord)
-        leftvisited = set()
-        leftvisited.add(beginWord)
-        rightqueue = deque()
-        rightqueue.append(endWord)
-        rightvisited = set()
-        rightvisited.add(endWord)
+
+        lqueue = list()
+        lvisited = set()
+        lqueue.append(beginWord)
+        lvisited.add(beginWord)
+
+        rqueue = list()
+        rvisited = set()
+        rqueue.append(endWord)
+        rvisited.add(endWord)
+
         step = 0
-        # 遍历左右队列
-        while leftqueue and rightqueue:
-            # 找较短的队列
-            if len(leftqueue) > len(rightqueue):
-                leftqueue, leftvisited, rightqueue, rightvisited = rightqueue, rightvisited, leftqueue, leftvisited
-            # step+1
+
+        while lqueue and rqueue:
             step += 1
-            for _ in range(len(leftqueue)):
-                cur = leftqueue.popleft()
-                if cur in rightvisited:  # 接龙成功
+
+            if len(lqueue) > len(rqueue):
+                lqueue, lvisited, rqueue, rvisited = rqueue, rvisited, lqueue, lvisited
+
+            for _ in range(len(lqueue)):
+                cur = lqueue.pop(0)
+                if cur in rvisited:
                     return step
                 else:
-                    # 组装新单词
                     for i in range(len(cur)):
                         for j in 'abcdefghijklmnopqrstuvwxyz':
                             tmp = cur[:i] + j + cur[i + 1:]
-                            if tmp in st and tmp not in leftvisited:
-                                leftqueue.append(tmp)
-                                leftvisited.add(tmp)
-        # 匹配不到
+                            if tmp in st and tmp not in lvisited:
+                                lqueue.append(tmp)
+                                lvisited.add(tmp)
+
         return 0
 
 # leetcode submit region end(Prohibit modification and deletion)

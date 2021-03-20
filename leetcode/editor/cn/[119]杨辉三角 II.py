@@ -20,10 +20,11 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def getRow(self, rowIndex: int) -> List[int]:
-        res = [1] * (rowIndex + 1)
-        for i in range(1, len(res) - 1):
-            # print(res[i - 1])
-            # print((rowIndex - i + 1) // i)
-            res[i] = res[i - 1] * (rowIndex - i + 1) // i
-        return res
+        dp = [1] * (rowIndex + 1)
+        # print(dp)
+        for i in range(2, rowIndex + 1):
+            for j in range(i - 1, 0, -1):
+                dp[j] += dp[j - 1]
+        # print(dp)
+        return dp
 # leetcode submit region end(Prohibit modification and deletion)

@@ -38,11 +38,17 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        # 初始化最小价格和最大利润
-        minprice = float('inf')
-        maxprofit = 0
-        for price in prices:
-            minprice = min(price, minprice)
-            maxprofit = max(maxprofit, price - minprice)
-        return maxprofit
+        n = len(prices)
+        # 初始化dp
+        dp = [[0] * 2 for _ in range(n)]
+        dp[0][0] = 0    #未持有
+        dp[0][1] = -prices[0]   #持有
+        # print(dp)
+        # 遍历prices
+        for i in range(1, n):
+            dp[i][0] = max(dp[i - 1][1] + prices[i], dp[i - 1][0])
+            dp[i][1] = max(- prices[i], dp[i - 1][1])
+        # print(dp)
+        # 返回dp[i][0]
+        return dp[-1][0]
 # leetcode submit region end(Prohibit modification and deletion)

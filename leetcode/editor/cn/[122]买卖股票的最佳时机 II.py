@@ -38,7 +38,7 @@
 #  0 <= prices[i] <= 10 ^ 4 
 #  
 #  Related Topics 贪心算法 数组 
-#  👍 1066 👎 0
+#  👍 1145 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -46,16 +46,16 @@ class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         if not prices:
             return 0
-        # 初始dp数组
-        dp = [[0] * 2 for _ in range(len(prices))]
-        # 第一天初始
-        dp[0][0] = 0  # 未持有
-        dp[0][1] = -prices[0]  # 持有
+        # 初始化dp
+        n = len(prices)
+        dp = [[0] * 2 for _ in range(n)]
+        dp[0][0] = 0  # 第一天未持有
+        dp[0][1] = -prices[0]  # 第一天买入
         # print(dp)
-        # 遍历交易
-        for i in range(1, len(prices)):
-            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])
-            dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i])
+        for i in range(1, n):
+            dp[i][0] = max(dp[i - 1][1] + prices[i], dp[i - 1][0])
+            dp[i][1] = max(dp[i - 1][0] - prices[i], dp[i - 1][1])
         # print(dp)
+        # 最大利润在未持有
         return dp[-1][0]
 # leetcode submit region end(Prohibit modification and deletion)

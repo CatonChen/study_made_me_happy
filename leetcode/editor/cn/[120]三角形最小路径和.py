@@ -52,14 +52,12 @@ class Solution:
     def minimumTotal(self, triangle: List[List[int]]) -> int:
         if not triangle:
             return 0
-        # 初始dp
-        n = len(triangle)  # 三角形的行
-        m = len(triangle[-1])  # 三角形的最后一行的列，最长
-        dp = [0] * (m + 1)
-        for i in range(n - 1, -1, -1):
-            # j顺序遍历
-            for j in range(len(triangle[i])):
-                dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j]
-        # print(dp)
-        return dp[0]
+        # 原地修改三角形
+        # 倒序遍历，自下而上
+        # print(triangle)
+        for i in range(len(triangle) - 2, -1, -1):  # 逆序遍历每行
+            for j in range(len(triangle[i])):  # 对每行进行遍历
+                triangle[i][j] = min(triangle[i + 1][j + 1], triangle[i + 1][j]) + triangle[i][j]
+        # print(triangle)
+        return triangle[0][0]  # 最小路径和在三角形顶点
 # leetcode submit region end(Prohibit modification and deletion)
