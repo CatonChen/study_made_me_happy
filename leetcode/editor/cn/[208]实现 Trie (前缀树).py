@@ -18,7 +18,7 @@
 #  保证所有输入均为非空字符串。 
 #  
 #  Related Topics 设计 字典树 
-#  👍 518 👎 0
+#  👍 571 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -35,50 +35,33 @@ class Trie:
         """
         Inserts a word into the trie.
         """
-        # print('insert:'+word)
         node = self.root
         for char in word:
             node = node.setdefault(char, {})
         node[self.end_of_word] = self.end_of_word
-        # print(self.root)
-        # print('insert done')
-
 
     def search(self, word: str) -> bool:
         """
         Returns if the word is in the trie.
         """
-        # print('search:'+word)
-
         node = self.root
-        # print(node)
         for char in word:
             if char not in node:
-                # print('search false')
                 return False
             else:
                 node = node[char]
-                # print(node)
-        # print(node)
-        # print(self.end_of_word in node)
-        # print('search done')
         return self.end_of_word in node
 
     def startsWith(self, prefix: str) -> bool:
         """
         Returns if there is any word in the trie that starts with the given prefix.
         """
-        # print('start with:'+prefix)
         node = self.root
-        # print(node)
         for char in prefix:
             if char not in node:
-                # print('start with false')
                 return False
             else:
                 node = node[char]
-        # print(node)
-        # print('start done')
         return True
 
 # Your Trie object will be instantiated and called as such:

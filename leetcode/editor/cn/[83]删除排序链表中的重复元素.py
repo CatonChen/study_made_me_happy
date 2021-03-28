@@ -22,7 +22,6 @@
 #         self.next = next
 class Solution:
     def deleteDuplicates(self, head: ListNode) -> ListNode:
-        # 终止条件
         if not head or not head.next:
             return head
         head.next = self.deleteDuplicates(head.next)

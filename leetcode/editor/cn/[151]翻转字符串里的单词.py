@@ -63,29 +63,24 @@
 #  请尝试使用 O(1) 额外空间复杂度的原地解法。 
 #  
 #  Related Topics 字符串 
-#  👍 284 👎 0
+#  👍 295 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def reverseWords(self, s: str) -> str:
-        # 删除首尾空格
         s = s.strip()
-        i = j = len(s) - 1  # 初始化i,j下标
+        i = j = len(s) - 1
         res = []
-        # 遍历字符串
         while i >= 0:
-            # 搜索走出单词的第一个空格
+            # 当下标i指向字母时，一直移动
             while i >= 0 and s[i] != ' ':
                 i -= 1
-            # 添加单词
             res.append(s[i + 1:j + 1])
-            # 跳过单词之间的空格
+            # 当下标i指向空格时，跳过
             while i >= 0 and s[i] == ' ':
                 i -= 1
-            # 移动j到i处
+            # 把j移动i
             j = i
-        # 返回结果
         return ' '.join(res)
-
 # leetcode submit region end(Prohibit modification and deletion)

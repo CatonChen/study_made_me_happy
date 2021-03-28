@@ -65,7 +65,6 @@ class Solution:
         count = 0
         while n != 0:
             count += 1
-            n = n & (n - 1)
-            # print(n)
+            n = n & (n - 1)  # 消除最低位的1
         return count
 # leetcode submit region end(Prohibit modification and deletion)
