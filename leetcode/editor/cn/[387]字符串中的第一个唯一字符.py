@@ -15,23 +15,23 @@
 # 
 #  提示：你可以假定该字符串只包含小写字母。 
 #  Related Topics 哈希表 字符串 
-#  👍 354 👎 0
+#  👍 364 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def firstUniqChar(self, s: str) -> int:
-        # 哈希字典记录字符和次数
         hashmap = {}
+        # 遍历s，进行计数
         for c in s:
-            if hashmap.get(c) is not None:
-                hashmap[c] += 1
-            else:
+            if c not in hashmap:
                 hashmap[c] = 1
-        # print(hashmap)
-        # 遍历字符串，返回第一个次数为1的元素下标i
-        for i in range(len(s)):
-            if hashmap[s[i]] == 1:
-                return i
+            else:
+                hashmap[c] += 1
+        # 找出计数=1的字符
+        for i, v in hashmap.items():
+            if v == 1:
+                return s.index(i)
+                break
         return -1
 # leetcode submit region end(Prohibit modification and deletion)

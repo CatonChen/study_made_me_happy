@@ -33,7 +33,7 @@
 #  l1 和 l2 均按 非递减顺序 排列 
 #  
 #  Related Topics 递归 链表 
-#  👍 1539 👎 0
+#  👍 1635 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -44,16 +44,22 @@
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-        # 终止条件
         if l1 is None:
             return l2
         if l2 is None:
             return l1
-        # 较小节点的next，指向其余节点的合并结果
-        if l1.val < l2.val:
-            l1.next = self.mergeTwoLists(l1.next, l2)
-            return l1
-        else:
-            l2.next = self.mergeTwoLists(l1, l2.next)
-            return l2
+        dummy = ListNode(0)
+        dummyhead = dummy
+        while l1 and l2:
+            # dummyhead.next指向较小者
+            if l1.val < l2.val:
+                dummyhead.next = l1
+                l1 = l1.next
+            else:
+                dummyhead.next = l2
+                l2 = l2.next
+            dummyhead = dummyhead.next
+        # dummyhead.next指向剩余的一方
+        dummyhead.next = l1 if l1 is not None else l2
+        return dummy.next
 # leetcode submit region end(Prohibit modification and deletion)
