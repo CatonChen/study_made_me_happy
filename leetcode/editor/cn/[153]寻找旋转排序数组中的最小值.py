@@ -42,22 +42,19 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def findMin(self, nums: List[int]) -> int:
-        if len(nums) == 1:  # 特例1
-            return nums[0]
-        left, right = 0, len(nums) - 1
-        if nums[right] > nums[left]:  # 特例2，是个生序数组
-            return nums[0]
         # 二分查找
-        while left < right:
+        left, right = 0, len(nums) - 1
+        while left <= right:
             mid = (left + right) // 2
-            # print (left,right,mid)
-            if nums[mid] > nums[mid + 1]:
-                return nums[mid + 1]
-            if nums[mid - 1] > nums[mid]:
-                return nums[mid]
-            if nums[left] < nums[mid]:
+            # 生序数组
+            if nums[left] < nums[right]:
+                return nums[left]
+            # 0-mid是生序 min值在mid-right之间
+            elif nums[mid] > nums[right]:
                 left = mid + 1
-            else:
+            # mid=0是生序数组的第一个元素，或 在生序数组中mid-1的元素>mid的元素
+            elif mid == 0 or nums[mid - 1] > nums[mid]:
+                return nums[mid]
+            else:  # mid-right是生序，min在left-mid之间
                 right = mid - 1
-
 # leetcode submit region end(Prohibit modification and deletion)

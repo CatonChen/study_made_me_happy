@@ -43,18 +43,19 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        # 递归
-        def myRob(nums):
+        # 递归打家劫舍1的方法
+        def rob1(nums):
             cur = pre = 0
             for num in nums:
-                cur, pre = max(pre + num, cur), cur
+                cur, pre = max(pre + num, cur), cur  # dp[n-1]+num和dp[n]的较大值
             return cur
 
-        # 特例
-        if len(nums) == 1:
+        # 将环形拆分成两个链式
+        if not nums:
+            return 0
+        n = len(nums)
+        if n == 1:
             return nums[0]
-        else:
-            p1 = myRob(nums[:-1])
-            p2 = myRob(nums[1:])
-            return max(p1, p2)
+        # nums[:-1] 和 nums[1:]
+        return max(rob1(nums[:-1]), rob1(nums[1:]))
 # leetcode submit region end(Prohibit modification and deletion)

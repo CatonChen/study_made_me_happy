@@ -50,28 +50,25 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        # nums为空，返回-1
+        # nums为空
         if not nums:
             return -1
         # 二分查找
         n = len(nums)
         left, right = 0, n - 1
         while left <= right:
-            mid = (left + right) >> 1  # mid=(left+right)/2
-            if nums[mid] == target:  # 找到目标
+            mid = (left + right) // 2
+            if nums[mid] == target:
                 return mid
-            elif nums[0] <= nums[mid]:  # 数组中0~mid是有序的
-                # target落在nums[0]~nums[mid]之间，固定left，移动right
-                if nums[0] <= target < nums[mid]:
+            elif nums[left] <= nums[mid]:
+                if nums[left] <= target < nums[mid]:
                     right = mid - 1
                 else:
                     left = mid + 1
-            else:  # 当nums[0]>nums[mid]
-                # target落在nums[mid]~nums[n-1]之间，固定right，移动left
-                if nums[mid] < target <= nums[n - 1]:
+            else:  # nums[left]>nums[mid]
+                if nums[mid] < target <= nums[right]:
                     left = mid + 1
                 else:
                     right = mid - 1
-        # 找不到返回-1
         return -1
 # leetcode submit region end(Prohibit modification and deletion)
