@@ -27,11 +27,21 @@
 #         self.right = right
 class Solution:
     def maxDepth(self, root: TreeNode) -> int:
-        # 没有节点时返回0
+        ans = 0
         if not root:
-            return 0
-        # 递归左右子树
-        left = self.maxDepth(root.left)
-        right = self.maxDepth(root.right)
-        return max(left, right) + 1
+            return ans
+        queue = []  # 建立队列
+        queue.append(root)
+        while queue:
+            size = len(queue)
+            while size > 0:
+                cur = queue.pop(0)
+                if cur.left is not None:
+                    queue.append(cur.left)
+                if cur.right is not None:
+                    queue.append(cur.right)
+                size -= 1  # 处理好一个节点
+            ans += 1  # 处理好一层
+        return ans
+
 # leetcode submit region end(Prohibit modification and deletion)

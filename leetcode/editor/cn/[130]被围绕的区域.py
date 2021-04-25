@@ -34,11 +34,10 @@
 #  
 #  
 #  Related Topics 深度优先搜索 广度优先搜索 并查集 
-#  👍 495 👎 0
+#  👍 526 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
-# unionfind
 class UnionFind:
     def __init__(self):
         self.father = {}
@@ -77,32 +76,29 @@ class Solution:
             return None
         m, n = len(board), len(board[0])
 
-        # 定义节点，用于将xy坐标转为一个节点
+        # 定义node
         def node(x, y):
             return x * n + y
 
-        # dummy节点
         uf = UnionFind()
-        dummy = m * n
+        dummy = node(m, n)
         uf.add(dummy)
-        # 遍历矩阵中的O
-        for i in range(m):
-            for j in range(n):
-                if board[i][j] == 'O':
-                    # 边界O
-                    if i == 0 or j == 0 or i == m - 1 or j == n - 1:
-                        uf.merge(node(i, j), dummy)
-                    else:  # 非边界O
-                        for mx, my in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
-                            if 0 <= mx < m and 0 <= my < n and board[mx][my] == 'O':
-                                uf.merge(node(i, j), node(mx, my))
-        # 遍历矩阵的O
-        # 判断与dummy的连通性
-        for i in range(m):
-            for j in range(n):
-                if uf.is_connected(dummy, node(i, j)):
-                    board[i][j] = 'O'
-                else:
-                    board[i][j] = 'X'
 
+        for x in range(m):
+            for y in range(n):
+                if board[x][y] == 'O':  # 对O操作
+                    # 边界坐标
+                    if x == 0 or y == 0 or x == m - 1 or y == n - 1:
+                        uf.merge(node(x, y), dummy)
+                    else:  # 非边界但相邻
+                        for mx, my in [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]:
+                            if 0 <= mx < m and 0 <= my < n and board[mx][my] == 'O':
+                                uf.merge(node(x, y), node(mx, my))
+        # 更新board
+        for x in range(m):
+            for y in range(n):
+                if uf.is_connected(node(x, y), dummy):
+                    board[x][y] = 'O'
+                else:
+                    board[x][y] = 'X'
 # leetcode submit region end(Prohibit modification and deletion)
