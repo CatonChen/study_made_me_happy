@@ -32,28 +32,28 @@
 #  
 #  
 #  Related Topics 回溯算法 
-#  👍 242 👎 0
+#  👍 254 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def totalNQueens(self, n: int) -> int:
-        # 回溯
+        res = 0
+        if n < 1:
+            return res
+
+        # 递归
         def dfs(queens, xy_diff, xy_sum):
-            nonlocal res
-            p = len(queens)  # 算行数，行列相等
+            nonlocal res  # 全局变量
+            p = len(queens)
             if p == n:
                 res += 1
                 return
-            # 遍历每列
             for q in range(n):
-                # 剪枝 ，逆向思维，能放Q的位置必须同时满足不在列、撇、捺里
+                # 剪枝，仅符合条件时递归工作
                 if q not in queens and p - q not in xy_diff and p + q not in xy_sum:
-                    # 递归操作
                     dfs(queens + [q], xy_diff + [p - q], xy_sum + [p + q])
 
-        res = 0
         dfs([], [], [])
         return res
-
 # leetcode submit region end(Prohibit modification and deletion)

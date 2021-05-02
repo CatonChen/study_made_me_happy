@@ -34,26 +34,28 @@
 #  
 #  
 #  Related Topics 回溯算法 
-#  👍 766 👎 0
+#  👍 858 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        # 回溯
+        res = []
+        if n < 1:
+            return res
+
+        # 递归
         def dfs(queens, xy_diff, xy_sum):
-            p = len(queens)  # 算行数，行列相等
+            p = len(queens)
             if p == n:
                 res.append(queens)
                 return
-            # 遍历每列
             for q in range(n):
-                # 剪枝 ，逆向思维，能放Q的位置必须同时满足不在列、撇、捺里
+                # 剪枝，仅符合条件时递归工作
                 if q not in queens and p - q not in xy_diff and p + q not in xy_sum:
-                    # 递归操作
                     dfs(queens + [q], xy_diff + [p - q], xy_sum + [p + q])
 
-        res = []
         dfs([], [], [])
         return [['.' * i + 'Q' + '.' * (n - i - 1) for i in sol] for sol in res]
+
 # leetcode submit region end(Prohibit modification and deletion)
