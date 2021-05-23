@@ -38,9 +38,9 @@
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
         n = len(cost)
-        pre = cur = 0
+        cur = pre = 0
         for i in range(2, n + 1):
             nex = min(cur + cost[i - 1], pre + cost[i - 2])
-            pre, cur = cur, nex
+            cur, pre = nex, cur
         return cur
 # leetcode submit region end(Prohibit modification and deletion)
