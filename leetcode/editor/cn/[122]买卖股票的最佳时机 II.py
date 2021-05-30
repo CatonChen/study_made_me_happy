@@ -46,16 +46,13 @@ class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         if not prices:
             return 0
-        # 初始化dp
         n = len(prices)
+        # 初始化dp
         dp = [[0] * 2 for _ in range(n)]
-        dp[0][0] = 0  # 第一天未持有
-        dp[0][1] = -prices[0]  # 第一天买入
-        # print(dp)
+        dp[0][0], dp[0][1] = 0, -prices[0]  # 第一天持有与未持有
         for i in range(1, n):
-            dp[i][0] = max(dp[i - 1][1] + prices[i], dp[i - 1][0])
-            dp[i][1] = max(dp[i - 1][0] - prices[i], dp[i - 1][1])
-        # print(dp)
-        # 最大利润在未持有
-        return dp[-1][0]
+            dp[i][0] = max(dp[i - 1][1] + prices[i], dp[i - 1][0])  # 第i天未持有的最大利润
+            dp[i][1] = max(dp[i - 1][0] - prices[i], dp[i - 1][1])  # 第i天持有的最大利润
+        return dp[-1][0]  # 未持有的情况总是最大利润所在
+
 # leetcode submit region end(Prohibit modification and deletion)

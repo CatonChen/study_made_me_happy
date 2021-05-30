@@ -51,20 +51,20 @@
 # 
 #  进阶：如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的 分治法 求解。 
 #  Related Topics 数组 分治算法 动态规划 
-#  👍 2891 👎 0
+#  👍 3252 👎 0
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         # 贪心算法
-        res = float('-inf')  # 设定res初始为最小值
+        res = float('-inf')  # 初始一个最小值
         tmp = 0
         for i in range(len(nums)):
-            tmp += nums[i]  # 当前子数组连续和
+            tmp += nums[i]  # 子序和
             if tmp > res:
-                res = tmp  # tmp>res，则记录最大的tmp
-            if tmp < 0:  # 当前子数组连续和<0时，tmp重置为0
-                tmp = 0
+                res = tmp  # 记录最大的子序和
+            if tmp < 0:
+                tmp = 0  # 子序和<0时，tmp归0
         return res
 # leetcode submit region end(Prohibit modification and deletion)
