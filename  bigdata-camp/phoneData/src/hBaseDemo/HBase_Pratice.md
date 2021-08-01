@@ -204,6 +204,10 @@ public class HBaseDemo {
 
 #### HBse shell 练习
 ```apache
+# 创建表空间
+create_namespace 'chenhao'
+describe_namespace 'chenhao'
+
 # 创建表
 create 'chenhao:student','info','score'
 
@@ -243,5 +247,8 @@ drop 'chenhao:student'
 ```
 
 #### 运行结果
-![](hbase01.png)
-![](hbase02.png)
+![][image-1]
+![][image-2]
+
+[image-1]:	hbase01.png
+[image-2]:	hbase02.png
